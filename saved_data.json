@@ -1,0 +1,162 @@
+{
+  "class": "go.GraphLinksModel",
+  "copiesArrays": true,
+  "copiesArrayObjects": true,
+  "linkFromPortIdProperty": "fromPort",
+  "linkToPortIdProperty": "toPort",
+  "nodeDataArray": [
+    {
+      "name": "HUB",
+      "leftArray": [],
+      "rightArray": [],
+      "topArray": [],
+      "bottomArray": [
+        {
+          "portId": "bottom3",
+          "portColor": "#17f413"
+        },
+        {
+          "portId": "bottom4",
+          "portColor": "#17f413"
+        },
+        {
+          "portId": "bottom5",
+          "portColor": "#17f413"
+        }
+      ],
+      "key": -9,
+      "loc": "150 0"
+    },
+    {
+      "name": "Major 1",
+      "leftArray": [],
+      "rightArray": [],
+      "topArray": [
+        {
+          "portId": "top0",
+          "portColor": "#17f413"
+        }
+      ],
+      "nodeColor": "#27AE60",
+      "bottomArray": [],
+      "key": -10,
+      "loc": "0 200",
+      "major": 1,
+      "minor": 35434,
+      "time": "2018-07-31 22:52:34",
+      "timestamp": 1533077554885,
+      "temp": 25.91,
+      "hum": 61.38,
+      "rssi": -58
+    },
+    {
+      "name": "Major 6",
+      "leftArray": [],
+      "rightArray": [],
+      "topArray": [
+        {
+          "portId": "top0",
+          "portColor": "#17f413"
+        }
+      ],
+      "nodeColor": "#27AE60",
+      "bottomArray": [],
+      "key": -8,
+      "loc": "150 200",
+      "major": 6,
+      "minor": 37482,
+      "time": "2018-07-31 22:52:39",
+      "timestamp": 1533077559205,
+      "temp": 25.91,
+      "hum": 65.29,
+      "rssi": -63
+    },
+    {
+      "name": "Major 2",
+      "leftArray": [],
+      "rightArray": [],
+      "topArray": [
+        {
+          "portId": "top0",
+          "portColor": "#17f413"
+        }
+      ],
+      "nodeColor": "#27AE60",
+      "bottomArray": [],
+      "key": -7,
+      "loc": "300 200",
+      "major": 2,
+      "minor": 36458,
+      "time": "2018-07-31 22:52:49",
+      "timestamp": 1533077569378,
+      "temp": 25.91,
+      "hum": 63.34,
+      "rssi": -55
+    }
+  ],
+  "linkDataArray": [
+    {
+      "from": -9,
+      "to": -10,
+      "fromPort": "bottom3",
+      "toPort": "top0",
+      "strokeColor": "#074DFF",
+      "points": [
+        138,
+        35,
+        138,
+        49,
+        138,
+        104,
+        0,
+        104,
+        0,
+        155,
+        0,
+        165
+      ]
+    },
+    {
+      "from": -9,
+      "to": -8,
+      "fromPort": "bottom4",
+      "toPort": "top0",
+      "strokeColor": "#074DFF",
+      "points": [
+        150,
+        35,
+        150,
+        53,
+        150,
+        108,
+        150,
+        108,
+        150,
+        155,
+        150,
+        165
+      ]
+    },
+    {
+      "from": -9,
+      "to": -7,
+      "fromPort": "bottom5",
+      "toPort": "top0",
+      "strokeColor": "#074DFF",
+      "points": [
+        162,
+        35,
+        162,
+        45,
+        162,
+        114,
+        300,
+        114,
+        300,
+        151,
+        300,
+        165
+      ]
+    }
+  ]
+}

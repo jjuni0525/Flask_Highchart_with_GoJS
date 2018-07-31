@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- HTML5 document type -->
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Flask Highchart with GoJS Diagram</title>
+
+	<!-- css -->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/datainspector.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/index.css') }}">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+	<!-- import JS files -->
+	<script src="{{ url_for('static', filename = 'javascript/go-debug.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'javascript/drawNodes.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'javascript/highCharts.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'javascript/datainspector.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'javascript/index.js') }}"></script>
+
+	<!-- highcharts -->
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/highcharts-more.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+	<!-- jQuery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</head>
+
+<body onload="initDiagram(); initChart(); diagram()">
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">Flask Highchart with GoJS Diagram</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li id="diagramButton" class="nav-item active" onclick="diagram()">
+						<a class="nav-link" href="#">Diagram<span class="sr-only">(current)</span></a>
+					</li>
+					<li id="graphButton" class="nav-item" onclick="graph()">
+						<a class="nav-link" href="#">Graph<span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<br><br><br>
+
+	<!-- GoJS Diagram -->
+	<div id="diagramDiv">
+		<div id="myDiagramDiv"></div>
+	
+		<div id="infoDraggable" class="draggable" style="display: inline-block; vertical-align: top; padding: 5px; top: 20px; left: 380px;">
+			<div id="infoDraggableHandle" class="handle">Info</div>
+			<div id="myInfo"></div>
+		</div>
+	
+		<!-- buttons -->
+		<div class="buttonDivWrapper">
+			<div class="buttonDiv">
+				<button id="saveButton" onclick="saveModel()">Save</button>
+				<button onclick="loadModel()">Load</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="graphDiv">
+		<!-- Example row of columns -->
+		<div class="row">
+			<div id="data-container-temp" class="container-fluid"></div>
+			<div id="data-container-hum" class="container-fluid"></div>
+		</div>
+	</div>
+</body>
+</html>
