@@ -59,3 +59,15 @@ with allowances for the title (top) and the resize handle (bottom)
     width: 100vw;
     margin: auto;
 }
+
+#data-container-temp, #data-container-hum {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#data-container-temp {
+    margin-bottom: 40px;
+}
