@@ -1,5 +1,6 @@
 from flask import Flask, render_template, make_response, url_for, request
 import json
+import numpy as np
 import pandas as pd
 import json
 import glob
@@ -7,8 +8,20 @@ import glob
 app = Flask(__name__)
 
 @app.route('/')
-def diagram():
-    return render_template('index.html')
+def index():
+    files = glob.glob("*.csv")
+    df = pd.read_csv(files[0]) 
+    # names = ['FORMAT', 'UUID', 'MAJOR', 'MINOR', 'TIME', 'TIMESTAMP', 'TEMPERATURE', 'HUMIDITY', 'RSSI', 'BYTE_DATA'])
+    df.MAJOR.astype(np.int64)
+    #Major over 10 is not the packet we want
+    df = df[(df.MAJOR < 10)]
+    tSeries = json.loads(getSeries(df,'TEMPERATURE'))
+    hSeries = json.loads(getSeries(df,'HUMIDITY'))
+
+    series = [tSeries, hSeries]
+    print(series)
+
+    return render_template('index.html', series = series)
 
 @app.route('/receiveJSON', methods = ['POST'])
 def receiveJSON():
@@ -26,30 +39,17 @@ def getJSON():
         data = json.load(f)
 
     return json.dumps(data)
-
-@app.route('/liveData')
-def liveData():
-    # Create a PHP array and echo it as JSON
-    files = glob.glob("*-*-*_*-*-*.csv")
-    df = pd.read_csv(files[0], names = ['Name', 'UUID', 'Major', 'Minor', 'formattedTime', 'time', 'temperature', 'humidity', 'rssi', 'data'])
-    #Major over 10 is not the packet we want
-    df = df[(df.Major < 10)]
-    series = getSeries(df,'temperature')
-    response = make_response(json.dumps(series))
-    response.content_type = 'application/json'
-
-    return response
-
+     
 def getSeries(df, option):
     #option is 'temperature' 'humidity'
-    major_type = df.Major.unique()
+    major_type = df.MAJOR.unique()
     series = '['
     for i in range(len(major_type)):
         major = major_type[i]
         series += '{"name":"Major ' + str(major) + '","data":['
         for index, row in df.iterrows():
-            if row['Major'] == major:
-                series += '[' + str(row['time']) + ',' + str(int(row[option])) + '],'
+            if row['MAJOR'] == major:
+                series += '[' + str(row['TIMESTAMP']) + ',' + str(int(row[option])) + '],'
                    
         series = series[:-1]
         series += ']},'

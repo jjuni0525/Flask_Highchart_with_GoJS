@@ -9,8 +9,20 @@ var PrevPacket;
 var major_list=[];
 //Major name list
 
-function initChart()
+function initChart(seriesList)
 {
+    seriesList.forEach((series) =>
+    {
+        series.forEach((seriesData) =>
+        {
+            var n = parseInt(seriesData.name.substring(6)); // substring(6): "Major 6" => "6"
+            console.log(n);
+            if(!major_list.includes(n))
+                major_list.push(n);
+        });
+    });
+    console.log(major_list);
+
     tChart = new Highcharts.Chart({
         chart: {
             renderTo: 'data-container-temp',
@@ -31,7 +43,8 @@ function initChart()
                 text: 'Temperature',
                 margin: 80
             }
-        }
+        },
+        series: seriesList[0]
     });
 
     hChart = new Highcharts.Chart({
@@ -54,20 +67,22 @@ function initChart()
                 text: 'Humidity',
                 margin: 80
             }
-        }
+        },
+        series: seriesList[1]
     });
 
     setInterval(requestChartData, 1000);
 }
 
-function requestChartData() {
+function requestChartData()
+{
     $.ajax({
         url:'http://165.132.105.119:3000/new_data',
         dataType : "json",
 
         success: function(point) {
-            if(PrevPacket == null || (PrevPacket.timestamp!=point.timestamp || PrevPacket.major!=point.major)){
-                if (major_list==null||!major_list.includes(point.major)){
+            if(PrevPacket == null || (PrevPacket.timestamp != point.timestamp || PrevPacket.major != point.major)){
+                if (major_list == null || !major_list.includes(point.major)){
                     //console.log(point);
                     //console.log(point.major);
                     //console.log(point.timestamp);
