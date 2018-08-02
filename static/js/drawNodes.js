@@ -3,7 +3,8 @@ const DEFAULT_LINK_COLOR = "#2F4F4F";
 const STABLE_LINK_COLOR = "#074DFF";
 const STABLE_PORT_COLOR = "#17f413"; //Stable port
 const HUB_NODE_COLOR = "#2C3E50"; // HUB
-
+const UNSTABLE_LINK_COLOR_1 = "#FFF13A";
+const UNSTABLE_LINK_COLOR_2 = "#FC0000";
 const BEACON_NODE_COLOR_LIST = [ // iBeacons
     "#27AE60", // node stable
     "#E67E22", // node unstable lv 1
@@ -279,6 +280,7 @@ function initDiagram()
 
 	setInterval(requestDiagramData, 1000);
     setInterval(checkNodeStatus, 2000);
+    setInterval(changeLinkStatus, 2000);
 }
 
 
@@ -598,26 +600,55 @@ function checkNodeStatus() {
 
     for(const [index, node] of nodes.entries()) {
         if('rssi' in node) {
+            myDiagram.startTransaction("updatestatus");
             if(node['rssi'] > -75) {
-                myDiagram.startTransaction("updatestatus");
-
                 myDiagram.model.setDataProperty(node, "nodeColor", BEACON_NODE_COLOR_LIST[0]);
-
-                myDiagram.commitTransaction("updatestatus");
             } else if(node['rssi'] <= -96) {
-                myDiagram.startTransaction("updatestatus");
-
                 myDiagram.model.setDataProperty(node, "nodeColor", BEACON_NODE_COLOR_LIST[2]);
 
-                myDiagram.commitTransaction("updatestatus");
             } else if(-96 < node['rssi'] && node['rssi'] <= -75) {
-                myDiagram.startTransaction("updatestatus");
-
                 myDiagram.model.setDataProperty(node, "nodeColor", BEACON_NODE_COLOR_LIST[1]);
+            }
+            myDiagram.commitTransaction("updatestatus");
+        }
+    }
 
-                myDiagram.commitTransaction("updatestatus");
+}
+
+function changeLinkStatus() {
+    var nodes = myDiagram.model.nodeDataArray;
+    var links = myDiagram.model.linkDataArray;
+    if(nodes.length <= 1) {
+        return;
+    }
+ 
+    for(const [index, node] of nodes.entries()) {
+ 
+        var link;
+        for(const [index, _link] of links.entries()) {
+            if(_link['to'] == node['key']) {
+                link = _link;
+                break;
             }
         }
+ 
+        myDiagram.startTransaction("updatelinks");
+        // connection status
+        if('rssi' in node) {
+            if(node['rssi'] > -75) {
+                myDiagram.model.setDataProperty(link, "strokeColor", STABLE_LINK_COLOR);
+            } else if(-100 <= node['rssi'] && node['rssi'] <= -96) {
+                myDiagram.model.setDataProperty(link, "strokeColor", UNSTABLE_LINK_COLOR_2);
+            } else if(-96 < node['rssi'] && node['rssi'] <= -75) {
+                myDiagram.model.setDataProperty(link, "strokeColor", UNSTABLE_LINK_COLOR_1);
+            } else {
+                myDiagram.model.setDataProperty(link, "strokeColor", CONNECTION_LOST);
+            }
+        }
+ 
+        myDiagram.commitTransaction("updatelinks");
+ 
+        // node status
     }
 
 }

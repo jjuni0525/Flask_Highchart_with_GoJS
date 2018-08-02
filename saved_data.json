@@ -11,11 +11,184 @@
       "rightArray": [],
       "topArray": [],
       "bottomArray": [
+        {
+          "portId": "bottom0",
+          "portColor": "#17f413"
+        },
+        {
+          "portId": "bottom1",
+          "portColor": "#17f413"
+        },
+        {
+          "portId": "bottom2",
+          "portColor": "#17f413"
+        }
       ],
       "key": -9,
       "loc": "150 0"
+    },
+    {
+      "name": "Major 6",
+      "leftArray": [],
+      "rightArray": [],
+      "topArray": [
+        {
+          "portId": "top0",
+          "portColor": "#17f413"
+        }
+      ],
+      "nodeColor": "#E67E22",
+      "bottomArray": [],
+      "key": -10,
+      "loc": "0 200",
+      "major": 6,
+      "minor": 38507,
+      "time": "2018-08-02 19:00:42",
+      "timestamp": 1533236442860,
+      "timestamplist": [
+        0,
+        42066,
+        42487,
+        124670,
+        126690,
+        42359,
+        42008,
+        82656,
+        42477,
+        41993
+      ],
+      "avg10receiveperiod": 58740,
+      "temp": 26.6,
+      "hum": 67.24,
+      "rssi": -76
+    },
+    {
+      "name": "Major 1",
+      "leftArray": [],
+      "rightArray": [],
+      "topArray": [
+        {
+          "portId": "top0",
+          "portColor": "#17f413"
+        }
+      ],
+      "nodeColor": "#27AE60",
+      "bottomArray": [],
+      "key": -8,
+      "loc": "150 200",
+      "major": 1,
+      "minor": 36971,
+      "time": "2018-08-02 19:01:37",
+      "timestamp": 1533236497708,
+      "timestamplist": [
+        85105,
+        42745,
+        0,
+        43077,
+        86866,
+        42873,
+        42241,
+        42928,
+        43392,
+        86079
+      ],
+      "avg10receiveperiod": 51530,
+      "temp": 26.6,
+      "hum": 64.31,
+      "rssi": -69
+    },
+    {
+      "name": "Major 2",
+      "leftArray": [],
+      "rightArray": [],
+      "topArray": [
+        {
+          "portId": "top0",
+          "portColor": "#17f413"
+        }
+      ],
+      "nodeColor": "#27AE60",
+      "bottomArray": [],
+      "key": -7,
+      "loc": "300 200",
+      "major": 2,
+      "minor": 37483,
+      "time": "2018-08-02 18:59:38",
+      "timestamp": 1533236378973,
+      "timestamplist": [
+        143685,
+        524018,
+        191129
+      ],
+      "avg10receiveperiod": 286277,
+      "temp": 26.6,
+      "hum": 65.29,
+      "rssi": -68
     }
   ],
   "linkDataArray": [
+    {
+      "from": -9,
+      "to": -10,
+      "fromPort": "bottom0",
+      "toPort": "top0",
+      "strokeColor": "#FFF13A",
+      "points": [
+        138,
+        35,
+        138,
+        49,
+        138,
+        104,
+        0,
+        104,
+        0,
+        155,
+        0,
+        165
+      ]
+    },
+    {
+      "from": -9,
+      "to": -8,
+      "fromPort": "bottom1",
+      "toPort": "top0",
+      "strokeColor": "#074DFF",
+      "points": [
+        150,
+        35,
+        150,
+        53,
+        150,
+        108,
+        150,
+        108,
+        150,
+        155,
+        150,
+        165
+      ]
+    },
+    {
+      "from": -9,
+      "to": -7,
+      "fromPort": "bottom2",
+      "toPort": "top0",
+      "strokeColor": "#074DFF",
+      "points": [
+        162,
+        35,
+        162,
+        45,
+        162,
+        114,
+        300,
+        114,
+        300,
+        151,
+        300,
+        165
+      ]
+    }
   ]
 }

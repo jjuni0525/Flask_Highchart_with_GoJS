@@ -16,12 +16,12 @@ function initChart(seriesList)
         series.forEach((seriesData) =>
         {
             var n = parseInt(seriesData.name.substring(6)); // substring(6): "Major 6" => "6"
-            console.log(n);
+            //console.log(n);
             if(!major_list.includes(n))
                 major_list.push(n);
         });
     });
-    console.log(major_list);
+    //console.log(major_list);
 
     tChart = new Highcharts.Chart({
         chart: {
