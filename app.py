@@ -9,9 +9,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    files = glob.glob("*.csv")
-    df = pd.read_csv(files[0]) 
-    # names = ['FORMAT', 'UUID', 'MAJOR', 'MINOR', 'TIME', 'TIMESTAMP', 'TEMPERATURE', 'HUMIDITY', 'RSSI', 'BYTE_DATA'])
+    files = glob.glob("day_*.csv")
+    #-1 to use most recent data
+    df = pd.read_csv(files[-1], names = ['FORMAT', 'UUID', 'MAJOR', 'MINOR', 'TIME', 'TIMESTAMP', 'TEMPERATURE', 'HUMIDITY', 'RSSI', 'BYTE_DATA'])
     df.MAJOR.astype(np.int64)
     #Major over 10 is not the packet we want
     df = df[(df.MAJOR < 10)]
