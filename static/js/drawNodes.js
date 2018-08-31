@@ -60,6 +60,8 @@ function initDiagram()
     // raised on right click on node
     var nodeMenu =  // context menu for each Node
     GO(go.Adornment, "Vertical",
+        makeButton("Send signal",
+        function(e, obj) { sendSignal(); }),
         makeButton("Copy",
         function(e, obj) { e.diagram.commandHandler.copySelection(); }),
         makeButton("Delete",
@@ -461,7 +463,7 @@ var prevTimestamp = -1;
 
 function requestDiagramData() {
     $.ajax({
-        url:'http://165.132.105.119:3000/new_data',
+        url:'http://0.0.0.0:8080/new_data',
         dataType : "json",
         success: function(point) {
             if(prevTimestamp != point.timestamp) {
@@ -621,9 +623,9 @@ function changeLinkStatus() {
     if(nodes.length <= 1) {
         return;
     }
- 
+
     for(const [index, node] of nodes.entries()) {
- 
+
         var link;
         for(const [index, _link] of links.entries()) {
             if(_link['to'] == node['key']) {
@@ -631,7 +633,7 @@ function changeLinkStatus() {
                 break;
             }
         }
- 
+
         myDiagram.startTransaction("updatelinks");
         // connection status
         if('rssi' in node) {
@@ -645,12 +647,16 @@ function changeLinkStatus() {
                 myDiagram.model.setDataProperty(link, "strokeColor", CONNECTION_LOST);
             }
         }
- 
+
         myDiagram.commitTransaction("updatelinks");
- 
+
         // node status
     }
 
+}
+
+function sendSignal() {
+    console.log('check');
 }
 
 // When copying a node, we need to copy the data that the node is bound to.
