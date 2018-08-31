@@ -24,8 +24,8 @@ def index():
     df = pd.read_csv(files[-1], names = header)
     if not df.major.empty:
         df.major.astype(np.int64)
-        #Major over 10 is not the packet we want
-        df = df[(df.major < 10)]
+        #Major over 20 is not the packet we want
+        df = df[(df.major < 20)]
         tSeries = json.loads(getSeries(df,'temp'))
         hSeries = json.loads(getSeries(df,'hum'))
 
@@ -59,26 +59,27 @@ def new_data():
     return res
 
 
-@app.route('/broadcast', methods = ['GET'])
-async def _broadcast():
+@app.route('/broadcast', methods = ['POST'])
+def broadcast():
     import os
     from datetime import datetime
+
+    content = request.get_json()
+    content['major'] += 20
+
+    res = make_response(json.dumps(content))
+    res.headers['Content-Type'] = 'application/json'
+    res.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    res.headers['Access-Control-Allow-Origin'] = '*'
+
     #adv_data = "1e 02 0a 1a 1a ff 4c 00 02 15 00 05 00 01 00 00 10 00 80 00 00 80 5f 9b 01 31 00 30 88 6a FF 00"
-    adv_data = "1e 02 0a 1a 1a ff 4c 00 02 15 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+    adv_data = "1e 02 0a 1a 1a ff 4c 00 02 15 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 " + str(content['major']) + " 00"
 
     os.system("sudo hciconfig hci0 noleadv")
     os.system("sudo hcitool -i hci0 cmd 0x08 0x0008 " + adv_data)
     os.system("sudo hciconfig hci0 leadv 3")
 
-    #await asyncio.sleep(0)
-
-def broadcast():
-    loop = asyncio.get_event_loop()
-    asyncio.ensure_future(_broadcast())
-    loop.run_forever()
-    loop.close()
-    return
-
+    return res
 
 def data_to_binstring(data):
     return array.array('B',data).tostring()
@@ -95,6 +96,10 @@ def callback(bt_addr, rssi, packet, additional_info, pkt):
     json_data['hum'] = packet.cypress_humidity
     json_data['rssi'] = rssi
     json_data['byte_data'] = hexlify(data_to_binstring(pkt[14:-1])).decode('ascii')
+
+    if json_data['byte_data'][-2:] > "20":
+        import os
+        os.system("sudo hciconfig hci0 noleadv")
 
     filename1 = json_data['time'][:10]
     with open('../day_' + str(filename1) + '.csv', 'a') as f1:

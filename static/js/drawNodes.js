@@ -656,7 +656,35 @@ function changeLinkStatus() {
 }
 
 function sendSignal() {
-    console.log('check');
+    myDiagram.startTransaction("signal");
+    myDiagram.selection.each(function(node) {
+        // skip any selected Links
+        if (!(node instanceof go.Node)) return;
+
+        var major = node['Wd']['major'];
+        getSignal(major);
+
+    });
+    myDiagram.commitTransaction("signal");
+}
+
+function getSignal(major) {
+    $.ajax({
+        type: "POST",
+        //url:'http://165.132.105.118:8080/broadcast',
+        url: '/broadcast',
+        dataType : "json",
+        contentType : "application/json; charset=UTF-8",
+        data: JSON.stringify({"major":major}),
+        success: function(signal) {
+            console.log(signal);
+        },
+        cache: false,
+        error: function(error) {
+            console.log(error);
+        }
+    });
+
 }
 
 // When copying a node, we need to copy the data that the node is bound to.
