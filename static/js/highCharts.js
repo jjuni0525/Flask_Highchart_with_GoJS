@@ -77,7 +77,7 @@ function initChart(seriesList)
 function requestChartData()
 {
     $.ajax({
-        url:'http://0.0.0.0:8080/new_data',
+        url:'http://165.132.105.118:8080/new_data',
         dataType : "json",
 
         success: function(point) {
